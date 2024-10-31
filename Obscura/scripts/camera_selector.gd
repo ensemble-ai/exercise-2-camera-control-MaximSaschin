@@ -4,7 +4,6 @@ extends Node
 
 var current_controller:int = 0
 
-
 func _ready():
 	for camera in cameras:
 		if null != camera:
