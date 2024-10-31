@@ -5,7 +5,6 @@ func _ready() -> void:
 	super()  # Call the base class _ready function
 	position = target.position  # Set initial position to the target position
 	make_current()  # Set this camera as the current one to ensure it works correctly
-	rotation_degrees.x = -90  # Rotate the camera to look downwards
 
 func _process(delta: float) -> void:
 	if !current:

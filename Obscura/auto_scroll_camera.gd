@@ -3,10 +3,10 @@ extends CameraControllerBase
 
 @export var top_left: Vector2
 @export var bottom_right: Vector2
-@export var autoscroll_speed: Vector3 = Vector3(10.0, 0.0, 0.0)
+@export var autoscroll_speed: Vector3 = Vector3(15.0, 0.0, 0.0) # Set scroll speed to 15
 
-@export var box_width: float = 10.0
-@export var box_height: float = 10.0
+@export var box_width: float = 24.0
+@export var box_height: float = 13.0
 
 func _ready() -> void:
 	super()  # Call the base class _ready function
@@ -30,19 +30,19 @@ func _process(delta: float) -> void:
 
 	# Boundary checks
 	# Left
-	var diff_between_left_edges = (tpos.x - target.WIDTH * 2.8) - (cpos.x - camera_width * 2.8)
+	var diff_between_left_edges = (tpos.x - target.WIDTH * 1.1) - (cpos.x - camera_width * 1.1)
 	if diff_between_left_edges < 0:
 		target.global_position.x -= diff_between_left_edges
 	# Right
-	var diff_between_right_edges = (tpos.x + target.WIDTH * 2.8) - (cpos.x + camera_width * 2.8)
+	var diff_between_right_edges = (tpos.x + target.WIDTH * 1.1) - (cpos.x + camera_width * 1.1)
 	if diff_between_right_edges > 0:
 		target.global_position.x -= diff_between_right_edges
 	# Top
-	var diff_between_top_edges = (tpos.z - target.HEIGHT * 1.5) - (cpos.z - camera_height * 1.5)
+	var diff_between_top_edges = (tpos.z - target.HEIGHT * 1.13) - (cpos.z - camera_height * 1.13)
 	if diff_between_top_edges < 0:
 		target.global_position.z -= diff_between_top_edges
 	# Bottom
-	var diff_between_bottom_edges = (tpos.z + target.HEIGHT * 1.5) - (cpos.z + camera_height * 1.5)
+	var diff_between_bottom_edges = (tpos.z + target.HEIGHT * 1.13) - (cpos.z + camera_height * 1.13)
 	if diff_between_bottom_edges > 0:
 		target.global_position.z -= diff_between_bottom_edges
 
@@ -64,10 +64,10 @@ func draw_logic() -> void:
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 
 	# Draw the frame border to match the visible camera area
-	var left: float = -box_width * 2.38
-	var right: float = box_width * 2.38
-	var top: float = -box_height * 1.3
-	var bottom: float = box_height * 1.3
+	var left: float = -box_width
+	var right: float = box_width 
+	var top: float = -box_height 
+	var bottom: float = box_height 
 
 	immediate_mesh.surface_add_vertex(Vector3(right, 0.5, top))
 	immediate_mesh.surface_add_vertex(Vector3(right, 0.5, bottom))
