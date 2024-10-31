@@ -8,7 +8,7 @@ func _ready():
 	for camera in cameras:
 		if null != camera:
 			camera.current = false
-	if(len(cameras) > current_controller+1):
+	if (len(cameras) > current_controller+1):
 		cameras[current_controller].make_current()
 
 

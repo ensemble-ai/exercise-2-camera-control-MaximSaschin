@@ -1,26 +1,25 @@
-class_name FramingAutoScrollCamera
+class_name AutoScrollCamera
 extends CameraControllerBase
 
 @export var top_left: Vector2
 @export var bottom_right: Vector2
-@export var autoscroll_speed: Vector3 = Vector3(15.0, 0.0, 0.0) # Set scroll speed to 15
+@export var autoscroll_speed: Vector3 = Vector3(15.0, 0.0, 0.0) # Sets autoscroll speed to 15
 
-@export var box_width: float = 24.0
-@export var box_height: float = 13.0
+@export var box_width: float = 24.0 # Width that best matches the visible camera width
+@export var box_height: float = 13.0 # Height that best matches the visible camera height
 
 func _ready() -> void:
-	super()  # Call the base class _ready function
-	position = target.position  # Set initial position to the target position
-	make_current()  # Set this camera as the current one to ensure it works correctly
+	super()  
+	position = target.position  
+	make_current() 
 
 func _process(delta: float) -> void:
 	if !current:
 		return
 
-	# Auto-scroll the frame
-	global_position += Vector3(autoscroll_speed.x * delta, 0.0, autoscroll_speed.z * delta)
+	global_position += Vector3(autoscroll_speed.x * delta, 0.0, autoscroll_speed.z * delta) # Autoscroll the entire frame across the map from left to right
 
-	# Apply boundary checks like PushBox logic to keep target within the frame
+	# Boundary checks similar to PushBox to keep target within the frame
 	var tpos = target.global_position
 	var cpos = global_position
 
@@ -46,14 +45,13 @@ func _process(delta: float) -> void:
 	if diff_between_bottom_edges > 0:
 		target.global_position.z -= diff_between_bottom_edges
 
-	# Adjust camera height to ensure it's positioned above the target
-	global_position.y = target.global_position.y + 20.0  # Keep camera 20 units above the target
+	global_position.y = target.global_position.y + 20.0  # Keeps the camera 20 units above the vessel
 
 	if draw_camera_logic:
-		draw_logic()  # Draw the camera logic if required
+		draw_logic() 
 
+# Draw the frame
 func draw_logic() -> void:
-	# Create a new ImmediateMesh to draw the frame
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
 	var material := ORMMaterial3D.new()
@@ -63,7 +61,7 @@ func draw_logic() -> void:
 
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 
-	# Draw the frame border to match the visible camera area
+	# Draw the frame border to match with the physical border
 	var left: float = -box_width
 	var right: float = box_width 
 	var top: float = -box_height 
@@ -88,8 +86,7 @@ func draw_logic() -> void:
 
 	add_child(mesh_instance)
 	mesh_instance.global_transform = Transform3D.IDENTITY
-	mesh_instance.global_position = Vector3(global_position.x, target.global_position.y + 1.0, global_position.z)  # Slightly above the target
+	mesh_instance.global_position = Vector3(global_position.x, target.global_position.y + 1.0, global_position.z) 
 
-	# Free the mesh after one update of _process
 	await get_tree().process_frame
 	mesh_instance.queue_free()
