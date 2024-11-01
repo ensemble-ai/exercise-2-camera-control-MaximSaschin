@@ -1,12 +1,12 @@
 class_name PushZoneCamera
 extends CameraControllerBase
 
-# Standard inner and outer box sizes (width and height)
+# Inner and outer box sizes (width and height)
 @export var box_width:float = 10.0
 @export var box_height:float = 10.0
 @export var inner_box_width:float = 6.0
 @export var inner_box_height:float = 6.0
-@export var speedup_factor:float = 0.5  # Speedup factor when inside the speedup zone
+@export var speedup_factor:float = 0.5  # Speedup ratio for when the vessel is in the speedup zone
 
 func _ready() -> void:
 	super()

@@ -3,7 +3,7 @@ extends CameraControllerBase
 
 @export var catchup_speed: float = 5.0 # Speed at which the camera travels to reach the vessel one the vessel stops moving
 @export var follow_speed: float = 8.0 # Speed at which the camera follows the vessel
-@export var leash_distance: float = 15.0
+@export var leash_distance: float = 15.0 # How far the vessel can be from the cross/camera
 
 func _ready() -> void:
 	super() 
