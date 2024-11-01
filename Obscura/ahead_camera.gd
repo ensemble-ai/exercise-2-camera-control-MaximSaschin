@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 		if position.distance_to(target.global_position) > leash_distance:
 			position = target_pos + lead_offset
 	else:
-		position = position.lerp(target_pos, 0.02) # Smoothly moves the camera towards the vessel once the vessel stops moving
+		position = position.lerp(target_pos, 0.01) # Smoothly moves the camera towards the vessel once the vessel stops moving
 
 	if draw_camera_logic:
 		draw_logic()
