@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 	if !current:
 		return
 
-	# Calculate the vessel position and velocity direction
+	# Calculate the vessel's position and the direction and velocity it is traveling
 	var target_pos = target.global_position + Vector3(0.0, dist_above_target, 0.0)
 	var velocity = target.velocity.normalized()
 
@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 	if velocity.length() > 0:
 		var lead_offset = Vector3(velocity.x, 0.0, velocity.z) * lead_speed
 		var desired_pos = target_pos + lead_offset
-		position = position.lerp(desired_pos, 0.03)
+		position = position.lerp(desired_pos, 0.05)
 		if position.distance_to(target.global_position) > leash_distance:
 			position = target_pos + lead_offset
 	else:

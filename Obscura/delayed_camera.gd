@@ -1,8 +1,8 @@
 class_name DelayedCamera
 extends CameraControllerBase
 
-@export var follow_speed: float = 5.0
-@export var catchup_speed: float = 10.0
+@export var catchup_speed: float = 5.0 # Speed at which the camera travels to reach the vessel one the vessel stops moving
+@export var follow_speed: float = 8.0 # Speed at which the camera follows the vessel
 @export var leash_distance: float = 15.0
 
 func _ready() -> void:
@@ -24,10 +24,10 @@ func _process(delta: float) -> void:
 
 		# If the distance to the vessel > leash distance, move the camera towards the player at follow_speed
 		if distance_to_target > leash_distance:
-			global_position = global_position.lerp(target.global_position + Vector3(0.0, dist_above_target, 0.0), follow_speed * delta)
+			global_position = global_position.lerp(target.global_position + Vector3(0.0, dist_above_target, 0.0), catchup_speed * delta)
 		else:
 			# If the vessel is still, move the camera toward the vessel at catchup_speed
-			global_position = global_position.lerp(target.global_position + Vector3(0.0, dist_above_target, 0.0), catchup_speed * delta)
+			global_position = global_position.lerp(target.global_position + Vector3(0.0, dist_above_target, 0.0), follow_speed * delta)
 
 # Draw the cross
 func draw_logic() -> void:
